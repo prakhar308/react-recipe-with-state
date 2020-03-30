@@ -10,35 +10,48 @@ class RecipeApp extends React.Component{
 		this.state = {
 			recipes : [
 				{
-					id : 1,
+					id : 0,
 					img : "pasta.jpg",
 					title : "Pasta",
 					ingredients : ['macroni', 'spices', 'water'],
 					instructions : "Mix ingredients"
 				},
 				{
-					id : 2,
+					id : 1,
 					img : "cold-coffee.jpg",
 					title : "Cold Coffee",
 					ingredients : [ '2 cup milk','2 1/2 teaspoon coffee','1 cup vanilla ice-cream'],
 					instructions : "Mix ingredients"
 				},
 				{
-					id : 3,
+					id : 2,
 					img : "egg-bhurji.jpg",
 					title : "Egg Bhurji",
 					ingredients : ['2-3 eggs','2 tablespoon oil','onoin and green chilli finely chopped'],
 					instructions : "Mix ingredients"	
 				}
 			],
-			nextRecipeId : 4 
+			nextRecipeId : 3 
 		}
+
+		this.handleSave = this.handleSave.bind(this);
 	}
+
+	handleSave(recipe){
+		this.setState((prevState, props) => {
+			const newRecipe = {...recipe, id : this.state.nextRecipeId};
+			return {
+				recipes : [...this.state.recipes, newRecipe],
+				nextRecipeId : prevState.nextRecipeId + 1
+			}
+		})
+	}
+
 	render(){
 	 return(
 	   <div className="App">
 	   	<Navbar />
-	   	<RecipeInput />
+	   	<RecipeInput onSave={this.handleSave}/>
 	   	<RecipeList recipes={this.state.recipes}/>
 	   </div>  
 	 );

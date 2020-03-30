@@ -50,7 +50,7 @@ class RecipeInput extends React.Component{
 	}
 
 	handleSubmit(e){
-		e.stopPropagation();
+		e.preventDefault();
 		this.props.onSave({...this.state});
 		this.resetInput();
 	}	
@@ -67,17 +67,17 @@ class RecipeInput extends React.Component{
     			className='recipe-form-line'
     			key={`ingredient-${i}`}
     		>
-    			<label>{`${i+1}.`}
-					<input
-						type="text"
-						name={`ingredient-${i}`}
-						value={ing}
-						size={45}
-						placeholder=" Ingredient"
-						onChange={this.handleChangeIng}/>
-					</label>
+    			<label>{`${i+1}.`}</label>
+				<input
+					type="text"
+					name={`ingredient-${i}`}
+					value={ing}
+					size={45}
+					placeholder=" Ingredient"
+					onChange={this.handleChangeIng}
+				/>
     		</div>
-    	))
+    	));
 
 		return(
 			<div className='recipe-form-container'>
