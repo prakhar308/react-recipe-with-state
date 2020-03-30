@@ -4,8 +4,8 @@ import Recipe from './Recipe'
 
 class RecipeList extends React.Component{
 	render(){
-		const recipes = this.props.recipes.map((r,index) => (
-			<Recipe key={index} {...r}/>
+		const recipes = this.props.recipes.map((r) => (
+			<Recipe key={r.id} {...r}/>
 		))
 		return(
 			<div className="recipe-list">
