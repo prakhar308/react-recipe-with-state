@@ -31,10 +31,12 @@ class RecipeApp extends React.Component{
 					instructions : "Mix ingredients"	
 				}
 			],
-			nextRecipeId : 3 
+			nextRecipeId : 3,
+			showForm : false 
 		}
 
 		this.handleSave = this.handleSave.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	handleSave(recipe){
@@ -42,19 +44,34 @@ class RecipeApp extends React.Component{
 			const newRecipe = {...recipe, id : this.state.nextRecipeId};
 			return {
 				recipes : [...this.state.recipes, newRecipe],
-				nextRecipeId : prevState.nextRecipeId + 1
+				nextRecipeId : prevState.nextRecipeId + 1,
+				showForm : false
 			}
 		})
 	}
 
+	handleDelete(id){
+		const recipes = this.state.recipes.filter((r) => r.id !== id);
+		this.setState({recipes});
+	}
+
 	render(){
-	 return(
-	   <div className="App">
-	   	<Navbar />
-	   	<RecipeInput onSave={this.handleSave}/>
-	   	<RecipeList recipes={this.state.recipes}/>
-	   </div>  
-	 );
+		const {showForm} = this.state;
+		return(
+		<div className="App">
+			
+			<Navbar onNewRecipe={() => this.setState({showForm : true})}/>
+			
+			{showForm ? 
+				<RecipeInput 
+					onClose={() => this.setState({showForm : false})}
+					onSave={this.handleSave}
+				/> : null
+			}
+			
+			<RecipeList onDelete={this.handleDelete} recipes={this.state.recipes}/>
+		</div>  
+		);
 	}
 }
 
